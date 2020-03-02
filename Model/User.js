@@ -152,9 +152,9 @@ class User
 
             users.map(u=>{ //maps - mapeia uma posição no array, e substitue os dados
 
-                if(u._id === this.id){//acha onde no array users tenha o mesmo id do obj
+                if(u._id == this.id){//acha onde no array users tenha o mesmo id do obj
 
-                    u = this;//faz a substituição
+                   Object.assign(u, this);//faz a substituição
                 }
 
                 return u;
