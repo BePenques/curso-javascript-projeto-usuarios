@@ -2,6 +2,7 @@ class User
 {
     constructor(name, gender, birth, country, email, password, photo, admin)//metodo construtor
     {
+        this._id;
         this._name = name;
         this._gender = gender;
         this._birth = birth;
@@ -116,6 +117,67 @@ class User
          }
     }
 
-    
+    static getUsersStorage()//metodo para retornar os dados que estão guardados no sessionstorage
+    {
+        let users = [];
+
+        if(localStorage.getItem("users"))//verifica se já existe algum obj na session users
+        {
+            //se tiver ...sobrescreve 
+            users = JSON.parse(localStorage.getItem("users")); //transforma string em obj JSON
+
+        }
+
+        return users;
+
+    }
+
+    getNewId()
+    {
+        if(!window.id) window.id = 0;
+
+        window.id++;
+
+        return id;
+
+        
+    }
+
+    save()
+    {
+        let users = User.getUsersStorage();//retorna todos os usuarios que estão no localstorage
+
+        //EDITANDO USER
+        if(this.id > 0){//no obj já existe um id?
+
+            users.map(u=>{ //maps - mapeia uma posição no array, e substitue os dados
+
+                if(u._id === this.id){//acha onde no array users tenha o mesmo id do obj
+
+                    u = this;//faz a substituição
+                }
+
+                return u;
+
+            });
+          
+        }
+        //CRIANDO USER
+        else//se não tiver o id, gera um novo
+        {
+            this._id = this.getNewId();
+
+            users.push(this);//push add no final do array
+        }
+
+        
+
+        localStorage.setItem("users",JSON.stringify(users));////transforma  obj JSON em string
+        //setitem - guarda na sessão chave + valor
+
+
+       
+    }
+
 
 }

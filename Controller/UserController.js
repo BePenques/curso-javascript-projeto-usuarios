@@ -61,6 +61,8 @@ class UserController{
 
             user.loadFromJSON(result);
 
+            user.save();
+
             this.getTr(user,tr);
 
 
@@ -109,7 +111,7 @@ class UserController{
 
                     values.photo = content;
 
-                    this.insertLocalSt(values);
+                    values.save();
 
                     this.addLine(values);//add a foto mesmo se não tiver img pra carregar
 
@@ -200,17 +202,6 @@ class UserController{
 
         });
 
-    }
-
-
-    insertLocalSt(data)
-    {
-        let users = this.getUsersStorage();
-
-        users.push(data);//push add no final do array
-
-        localStorage.setItem("users",JSON.stringify(users));////transforma  obj JSON em string
-        //setitem - guarda na sessão chave + valor
     }
 
      addLine(dataUser)
