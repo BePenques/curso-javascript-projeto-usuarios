@@ -100,6 +100,25 @@ class User
         this._register = value;
     }
 
+    getNewId()
+    {
+
+        //verificar se este ID já esta guardado no LS
+        let usersID = parseInt(localStorage.getItem("usersID"));//guarda o ultimo id gerado
+
+        console.log(usersID);
+
+        if(!usersID > 0) usersID = 0;
+
+        usersID++;
+
+        localStorage.setItem("usersID", usersID);
+
+        return usersID;
+
+        
+    }
+
     loadFromJSON(json)
     {
          for(let name in json){//pra cada nome que vc encontrar no json faça
@@ -130,17 +149,6 @@ class User
 
         return users;
 
-    }
-
-    getNewId()
-    {
-        if(!window.id) window.id = 0;
-
-        window.id++;
-
-        return id;
-
-        
     }
 
     save()
@@ -178,6 +186,36 @@ class User
 
        
     }
+
+    remove(){
+
+        let users = User.getUsersStorage();//carrega os dados de dentro do LocalStorage
+
+        users.forEach((userData, index) => {
+
+            //fazer um foreach para percorrer os users do LS que tenham o mesmo ID do que deve ser excluido
+            
+            if(this._id == userData._id)
+            {
+                //achou o que deve ser excluido
+
+                //para remover um item de um array apenas com o index delete, usa o método SPLICE()
+                
+                users.splice(index, 1); //1º qual o index/2º qtos vc quer remover?
+            
+            }
+
+
+        });
+
+        localStorage.setItem("users",JSON.stringify(users));////transforma  obj JSON em string
+        //setitem - guarda na sessão chave + valor
+
+        
+    }
+
+    
+  
 
 
 }

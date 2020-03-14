@@ -173,24 +173,11 @@ class UserController{
        
     }
 
-    getUsersStorage()//metodo para retornar os dados que estão guardados no sessionstorage
-    {
-        let users = [];
 
-        if(localStorage.getItem("users"))//verifica se já existe algum obj na session users
-        {
-            //se tiver ...sobrescreve 
-            users = JSON.parse(localStorage.getItem("users")); //transforma string em obj JSON
-
-        }
-
-        return users;
-
-    }
 
     selectAll()
     {
-        let users = this.getUsersStorage();
+        let users = User.getUsersStorage();
 
         users.forEach(dataUser=>{
 
@@ -252,6 +239,13 @@ class UserController{
 
             if(confirm("Deseja realmente excluir?"))//retorna true ou false
             {
+
+                let user = new User();
+
+                user.loadFromJSON(JSON.parse(tr.dataset.user));
+
+                user.remove();
+
                 //se true
                 tr.remove();
 
